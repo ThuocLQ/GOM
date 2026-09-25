@@ -10,7 +10,7 @@ if not exist "%SCRIPT%" (
   exit /b 1
 )
 
-powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT%" 1>"%LOG%" 2>&1
+powershell.exe -STA -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT%" 1>"%LOG%" 2>&1
 set "EXITCODE=%ERRORLEVEL%"
 
 if not "%EXITCODE%"=="0" (
