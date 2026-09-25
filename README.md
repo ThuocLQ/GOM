@@ -1,12 +1,12 @@
-# FSS Copy Portable
+# Delivery Copy
 
-FSS Copy Portable collects files for software delivery. The portable package is intentionally simple: a CMD launcher and a PowerShell application script.
+Delivery Copy collects files for software delivery. The portable package is intentionally simple: a CMD launcher and a PowerShell application script.
 
 ## Run
 
 1. Right-click the ZIP and choose **Extract All**.
-2. Open the extracted folder and double-click **`FSSCopyPortable.cmd`**.
-3. If startup fails, the CMD window stays open and prints the error. It also writes `FSSCopyPortable_startup_error.log` beside the tool.
+2. Open the extracted folder and double-click **`DeliveryCopy.cmd`**.
+3. If startup fails, the CMD window stays open and prints the error. It also writes `DeliveryCopy_startup_error.log` beside the tool.
 
 Windows PowerShell 5.1 is included with Windows 10 and 11. Git for Windows is required only for Git comparison.
 

@@ -1,10 +1,10 @@
 @echo off
 setlocal
-set "SCRIPT=%~dp0FSSCopyPortable.ps1"
-set "LOG=%~dp0FSSCopyPortable_startup_error.log"
+set "SCRIPT=%~dp0DeliveryCopy.ps1"
+set "LOG=%~dp0DeliveryCopy_startup_error.log"
 
 if not exist "%SCRIPT%" (
-  echo FSSCopyPortable.ps1 was not found.
+  echo DeliveryCopy.ps1 was not found.
   echo Extract the ZIP first, then run this CMD file from the extracted folder.
   pause
   exit /b 1
@@ -15,7 +15,7 @@ set "EXITCODE=%ERRORLEVEL%"
 
 if not "%EXITCODE%"=="0" (
   echo.
-  echo FSS Copy Portable could not start. Details are in:
+  echo Delivery Copy could not start. Details are in:
   echo %LOG%
   echo.
   type "%LOG%"
