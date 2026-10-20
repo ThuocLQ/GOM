@@ -6,12 +6,14 @@ Công cụ portable trên Windows để gom file bàn giao từ file/thư mục 
 
 - **Hỗ trợ chọn Profile bàn giao riêng biệt**:
   - **BVSC (Chứng khoán Bảo Việt)**: Tự động tổ chức cấu trúc thư mục chuẩn `2.HOST\upgrade\sql\2.HOST\...`, giữ nguyên `5.Reports` và `9.FileImport`, tự động sinh `2.HOST\upgrade\cmd\runUpdate.bat`, `setVariable.bat`, `2.HOST\upgrade\sql\install.sql`, thư mục `log`, `runscript.txt` với đường dẫn SQL tuyệt đối từ repo local, cùng `Huong_dan_cap_nhat.txt` và `Huong dan runall.sql` từ tài nguyên tích hợp trong app.
-  - **BSC**: Giữ nguyên cây thư mục repository (`1.BDSHOST`, `2.HOST`, `3.Service`...), tự động sinh `runscript.txt` tại thư mục bàn giao. Các lệnh script dùng đường dẫn tuyệt đối của file SQL trong repo local; không sinh `runscript.sql` hoặc `delivery_manifest`.
+  - **Other**: Giữ nguyên cây thư mục repository (`1.BDSHOST`, `2.HOST`, `3.Service`...), tự động sinh `runscript.txt` tại thư mục bàn giao. Các lệnh script dùng đường dẫn tuyệt đối của file SQL trong repo local; không sinh `runscript.sql` hoặc `delivery_manifest`.
 - **Tự động Checkout & Pull code mới nhất về local**:
   - Tự động checkout sang branch so sánh và pull commit mới nhất từ remote về local disk trước khi so sánh diff. Đảm bảo toàn bộ file được copy vào gói bàn giao đều là mã nguồn mới nhất trên máy.
 - **Sắp xếp SQL thông minh (FlexDB Order)**:
   - Một chạm tự động sắp xếp toàn bộ script SQL theo thứ tự phụ thuộc chuẩn của FlexDB: `ChangeScripts` → `Views` → `Triggers` → `Procedures` → `Functions` → `Packages` → `Parameters` (ALLCODE, APPRVRQD, DEFERROR, SYSVAR, ...).
 - **Rà soát danh sách trực quan**: include/exclude, tìm kiếm, lọc theo loại, tính tổng dung lượng và số lượng file SQL.
+- **Chế độ sáng/tối**: đổi giao diện bằng nút **Dark mode** trên thanh đầu trang; lựa chọn được lưu tại `%LOCALAPPDATA%\GOM\theme.json` và tự áp dụng ở lần mở tiếp theo.
+- **Đa ngôn ngữ**: giao diện mặc định bằng **English**, có thể chuyển sang **Arabic**; lựa chọn được lưu tại `%LOCALAPPDATA%\GOM\language.json`. Khi chọn tiếng Ả Rập, giao diện chuyển sang bố cục phải-sang-trái (RTL).
 - **Copy an toàn**: Giữ nguyên cấu trúc thư mục, xử lý file trùng (Skip/Overwrite/Rename), đối soát SHA-256 sau khi copy.
 - Không xuất file `delivery_manifest`.
 
@@ -41,7 +43,7 @@ Công cụ portable trên Windows để gom file bàn giao từ file/thư mục 
 └── 9.FileImport/                   (File template excel nếu có)
 ```
 
-### 2. Kiểu BSC
+### 2. Kiểu Other
 ```
 <Thư_mục_đích>/
 ├── 1.BDSHOST/
@@ -61,7 +63,7 @@ Công cụ portable trên Windows để gom file bàn giao từ file/thư mục 
 
 1. Giải nén ZIP hoặc mở thư mục app.
 2. Double-click `DeliveryCopy.cmd` (hoặc chạy `powershell -File App.ps1`).
-3. Khi app mở, chọn kiểu gom dự án (**BVSC** hoặc **BSC**). Bạn cũng có thể đổi Profile bất kỳ lúc nào ở thanh menu trên cùng.
+3. Khi app mở, chọn kiểu gom dự án (**BVSC** hoặc **Other**). Bạn cũng có thể đổi Profile bất kỳ lúc nào ở thanh menu trên cùng.
 4. Chọn nguồn:
    - **File và thư mục**: Bấm `Select files` hoặc `Select folder`.
    - **Git comparison**: Chọn thư mục repo, bấm `Load branches`, chọn Base và Compare branch. App sẽ tự động checkout và pull code mới nhất về local khi bấm `Add Git changes`.
@@ -74,8 +76,10 @@ Công cụ portable trên Windows để gom file bàn giao từ file/thư mục 
 
 | File | Vai trò |
 | --- | --- |
-| `App.ps1` | Logic giao diện, chuyển đổi Profile, xử lý luồng sự kiện |
+| `App.ps1` | Logic giao diện, chuyển đổi Profile/ngôn ngữ, lưu tùy chọn giao diện và xử lý luồng sự kiện |
 | `UI.xaml` | Layout giao diện, bộ chọn Profile, điều khiển Git và Review |
+| `Localization.json` | Bản dịch giao diện tiếng Ả Rập, với tiếng Anh làm ngôn ngữ mặc định |
+| `Localization.ps1` | Nạp bản dịch và áp dụng hướng RTL/LTR theo ngôn ngữ |
 | `Core.Git.ps1` | Git fetch, auto checkout & pull branch, diff và trích xuất file |
-| `Core.FileOps.ps1` | Ánh xạ đường dẫn theo Profile (BVSC / BSC), scan file, copy và hash |
-| `Core.SqlPlus.ps1` | Sinh bộ script thực thi cho BVSC (runUpdate.bat, setVariable.bat, install.sql) và BSC (runscript.txt với đường dẫn repo local tuyệt đối) |
+| `Core.FileOps.ps1` | Ánh xạ đường dẫn theo Profile (BVSC / Other), scan file, copy và hash |
+| `Core.SqlPlus.ps1` | Sinh bộ script thực thi cho BVSC (runUpdate.bat, setVariable.bat, install.sql) và Other (runscript.txt với đường dẫn repo local tuyệt đối) |
